@@ -1,13 +1,12 @@
 from selenium.webdriver.common.by import By
+
+
 #######################
 #     JS Scripts      #
 #######################
 def get_js(name):
-    with open(os.path.join('.', 'js', name), 'rb') as f:
+    with open(os.path.join('..', 'js', name), 'rb') as f:
         return f.read().decode('utf-8')
-
-class Script:
-    getDataURL_js = get_js('getDataURL.js')
 
 
 class Base:
@@ -37,5 +36,3 @@ class Base:
 
     def download(self, page_url):
         self.browser.get(page_url)
-
-

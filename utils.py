@@ -63,8 +63,8 @@ def get_website_object(url):
 #######################
 #   Get Image Data    #
 #######################
-def get_data_url(browser, css_selector):
-    data_base64 = browser.execute_script('return (%s)(arguments[0])' % Script.getDataURL_js, css_selector)
+def get_data_url(browser, selector):
+    data_base64 = browser.execute_script('return (%s)(arguments[0])' % Script.getDataURL_js, selector)
     if not data_base64:
         LOGGER.error("Don't get data url")
     LOGGER.debug('Get data URL %s ...' % data_base64[:50])
@@ -88,7 +88,7 @@ def save_as_file(data_base64, path):
 #######################
 def test():
     t = get_browser('phantomjs')
-    t.get('https://docs.adyen.com/developers/_/0A501411015D0E22EB095828388F9287/1499347178835/img/adyen-logo.png')
+    t.get('https://static.runoob.com/images/icon/html5.png')
     data = get_data_url(t, 'img')
     save_as_file(data, 'test.png')
     t.close()

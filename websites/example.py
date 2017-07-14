@@ -16,4 +16,3 @@ class Example(Base):
     image = '#image'
     next_page = '#next_page'
     next_episode = '#next_episode'
-
