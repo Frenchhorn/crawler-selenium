@@ -1,11 +1,12 @@
+import re
 from selenium.webdriver.common.by import By
 from .base import Base
 
 
 class Example(Base):
     # Match
-    menu = re.compile('')
-    page = re.compile('')
+    menu = re.compile('example')
+    page = re.compile('example')
 
     # Menu page
     episode = '#episode'

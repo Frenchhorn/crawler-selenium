@@ -1,8 +1,8 @@
 from .example import Example
-from .example2 import Example2
+from .test import Test
 
 
 __all__ = [
     Example.__name__,
-    Example2.__name__
+    Test.__name__
 ]

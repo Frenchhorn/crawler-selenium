@@ -1,17 +1,26 @@
+import os
 from selenium.webdriver.common.by import By
 
+
+
+CUR_DIR = os.path.dirname(__file__)
 
 #######################
 #     JS Scripts      #
 #######################
 def get_js(name):
-    with open(os.path.join('..', 'js', name), 'rb') as f:
+    with open(os.path.join(CUR_DIR, '..', 'js', name), 'rb') as f:
         return f.read().decode('utf-8')
 
 
 class Base:
     # JS Scripts
     getDataURL_js = get_js('getDataURL.js')
+
+    # Below attribute should be rewrite
+    # Match
+    menu = None   # URL pattern
+    page = None   # URL pattern
 
     # Menu page
     episode = ''
