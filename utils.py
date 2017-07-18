@@ -25,27 +25,6 @@ def get_browser(browser=BROWSER):
 
 
 #######################
-#       Logger        #
-#######################
-import logging
-import logging.config
-
-logging.config.fileConfig(os.path.join('.',"logger.conf"))
-LOGGER = logging.getLogger("dev")
-
-
-#######################
-#     JS Scripts      #
-#######################
-def get_js(name):
-    with open(os.path.join('.', 'js', name), 'rb') as f:
-        return f.read().decode('utf-8')
-
-class Script:
-    getDataURL_js = get_js('getDataURL.js')
-
-
-#######################
 #     Filter URL      #
 #######################
 import websites
@@ -58,41 +37,3 @@ def get_website_object(url):
         elif i.page.match(url):
             return i(page_url=url)
     return None
-
-
-#######################
-#   Get Image Data    #
-#######################
-def get_data_url(browser, selector):
-    data_base64 = browser.execute_script('return (%s)(arguments[0])' % Script.getDataURL_js, selector)
-    if not data_base64:
-        LOGGER.error("Don't get data url")
-    LOGGER.debug('Get data URL %s ...' % data_base64[:50])
-    return data_base64[22:]
-
-
-#######################
-#     Save Image      #
-#######################
-import base64
-
-def save_as_file(data_base64, path):
-    data = base64.b64decode(data_base64.encode('ascii'))
-    with open(path, 'wb') as f:
-        f.write(data)
-    LOGGER.info('Save image as %s' % path)
-
-
-#######################
-#        Test         #
-#######################
-def test():
-    t = get_browser('phantomjs')
-    t.get('https://static.runoob.com/images/icon/html5.png')
-    data = get_data_url(t, 'img')
-    save_as_file(data, 'test.png')
-    t.close()
-
-
-if __name__ == '__main__':
-    test()

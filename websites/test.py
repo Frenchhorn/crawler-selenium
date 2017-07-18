@@ -16,4 +16,3 @@ class Test(Base):
     image = 'img'
     next_page = None
     next_episode = None
-
