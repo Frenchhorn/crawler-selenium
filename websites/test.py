@@ -15,4 +15,3 @@ class Test(Base):
     # View page
     image = 'img'
     next_page = None
-    next_episode = None

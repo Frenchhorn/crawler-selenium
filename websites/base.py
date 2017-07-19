@@ -1,7 +1,6 @@
 import os
 import base64
 import logging, logging.config
-from selenium.webdriver.common.by import By
 
 
 CUR_DIR = os.path.dirname(__file__)
@@ -12,7 +11,7 @@ CUR_DIR = os.path.dirname(__file__)
 logging.config.fileConfig(os.path.join(CUR_DIR, '..',"logger.conf"))
 
 #######################
-#     JS Scripts      #
+#     Get Scripts     #
 #######################
 def get_js(name):
     with open(os.path.join(CUR_DIR, '..', 'js', name), 'rb') as f:
@@ -65,7 +64,13 @@ class Base:
     #      Download       #
     #######################
     def download(self):
-        pass
+        if self.page_url:
+            self._download_episode()
+        elif self.menu_url:
+            self._set_episodes()
+            self._download_episodes()
+        else:
+            self.LOGGER.error("URL is empty")
 
     def _download_episodes(self):
         for episode in self.episodes:
@@ -73,7 +78,7 @@ class Base:
             self._download_episode()
 
     def _download_episode(self):
-        self.download_page()    # first page
+        self._download_page()    # first page
         while self._next_page():
             self._download_page()
 

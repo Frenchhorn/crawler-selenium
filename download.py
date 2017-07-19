@@ -1,8 +1,7 @@
 import utils
-from websites import *
 
 
-SAVE_FOLDER = 'save'
+SAVE_FOLDER = 'download'
 
 def download(url):
     website_object = utils.get_website_object(url)
