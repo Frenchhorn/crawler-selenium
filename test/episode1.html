@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Episode1</title>
+</head>
+<body>
+    <img src="1.png">
+    <button class="next" onclick="nextPage()">next</button>
+</body>
+<script>
+    nextPage = function(){
+        let img = document.querySelector('img')
+        num = img.src.split('/')
+        num = num[num.length-1][0]
+        page = Number(num) + 1
+        img.src = page + '.png'
+        if (page >= 3){
+            document.querySelector('button').style.display = 'none'
+        }
+    }
+</script>
+</html>
