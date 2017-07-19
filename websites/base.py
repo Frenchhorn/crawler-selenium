@@ -11,19 +11,21 @@ CUR_DIR = os.path.dirname(__file__)
 logging.config.fileConfig(os.path.join(CUR_DIR, '..',"logger.conf"))
 
 #######################
-#     Get Scripts     #
+#       Scripts       #
 #######################
 def get_js(name):
     with open(os.path.join(CUR_DIR, '..', 'js', name), 'rb') as f:
         return f.read().decode('utf-8')
 
+class Script:
+
+    getDataURL_js = get_js('getDataURL.js')
+    redirect_js = get_js('redirect.js')
+
 
 class Base:
     # Logger
     LOGGER = logging.getLogger("dev")
-
-    # JS Scripts
-    getDataURL_js = get_js('getDataURL.js')
 
     # collect menu episode urls
     episodes = []
@@ -110,7 +112,7 @@ class Base:
     #     Save Image      #
     #######################
     def _get_data_url(self):
-        data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % self.getDataURL_js, self.image)
+        data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % Script.getDataURL_js, self.image)
         if not data_base64:
             self.LOGGER.error("Don't get data url")
         self.LOGGER.debug('Get data URL %s ...' % data_base64[:50])
@@ -121,3 +123,9 @@ class Base:
         with open(path, 'wb') as f:
             f.write(data)
         self.LOGGER.info('Save image as %s' % path)
+
+    #######################
+    #      Redirect       #
+    #######################
+    def redirect(self, url):
+        self.browser.execute_script('(%s)(arguments[0]' % Script.redirect_js, url)

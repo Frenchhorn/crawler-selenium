@@ -4,11 +4,11 @@ from .base import Base
 
 class Test(Base):
     # Match
-    menu = re.compile('test')
-    page = re.compile('https://static\.runoob\.com/images/icon/html5\.png')
+    menu = re.compile('.*menu.*')
+    page = re.compile('.*episode.*')
 
     # Menu page
-    episode = '#episode'
+    episode = '.episode'
     episodes = []
     episode_name = '#episode_name'
 
