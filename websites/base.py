@@ -59,7 +59,7 @@ class Base:
     def _set_episodes(self):
         elements = self.browser.find_elements_by_css_selector(self.episode)
         for i in elements:
-            self.episodes.append(i.get_attribute('href'))
+            self.episodes.append((i.get_attribute('text'),i.get_attribute('href')))
 
 
     #######################
@@ -76,8 +76,9 @@ class Base:
 
     def _download_episodes(self):
         for episode in self.episodes:
-            self.browser.get(episode)
-            self._download_episode()
+            for title, href in episode:
+                self.redirect(href)
+                self._download_episode()
 
     def _download_episode(self):
         self._download_page()    # first page
@@ -85,8 +86,9 @@ class Base:
             self._download_page()
 
     def _download_page(self):
+        name = self._get_image_name()
         data = self._get_data_url()
-        self._save_as_file(data, 'test.png')
+        self._save_as_file(data, name)
 
     # for test
     def download_page(self, page_url):
@@ -111,10 +113,17 @@ class Base:
     #######################
     #     Save Image      #
     #######################
+    def _get_image_name(self):
+        image = self.browser.find_elements_by_css_selector(self.image)
+        image = image[0]
+        name = image.get_attribute('href').split('/')[-1]
+        return name
+
     def _get_data_url(self):
         data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % Script.getDataURL_js, self.image)
         if not data_base64:
             self.LOGGER.error("Don't get data url")
+            return False
         self.LOGGER.debug('Get data URL %s ...' % data_base64[:50])
         return data_base64[22:]
 
@@ -123,6 +132,7 @@ class Base:
         with open(path, 'wb') as f:
             f.write(data)
         self.LOGGER.info('Save image as %s' % path)
+
 
     #######################
     #      Redirect       #
