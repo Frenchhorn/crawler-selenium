@@ -13,7 +13,7 @@ BROWSER = 'phantomjs'
 
 def get_browser(browser=BROWSER):
     if browser == 'phantomjs':
-        return webdriver.PhantomJS(executable_path=PHANTOMJS_PATH)
+        return webdriver.PhantomJS(executable_path=PHANTOMJS_PATH, service_args=['--web-security=false'])
     elif browser == 'chrome':
         return webdriver.Chrome(executable_path=CHROME_PATH)
     elif browser == 'firefox':
