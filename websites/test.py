@@ -5,7 +5,7 @@ from .base import Base
 class Test(Base):
     # Match
     menu = re.compile('.*menu.*')
-    page = re.compile('.*episode.*')
+    page = re.compile('.*phantomjs.*')
 
     # Menu page
     episode = '.episode'

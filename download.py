@@ -12,8 +12,8 @@ def download(url):
 
 
 if __name__ == '__main__':
-    website_object = utils.get_website_object('https://static.runoob.com/images/icon/html5.png')
+    website_object = utils.get_website_object('http://phantomjs.org/')
     browser = utils.get_browser()
     website_object.set_browser(browser)
-    website_object.download_page('https://static.runoob.com/images/icon/html5.png')
+    website_object.download_page('http://phantomjs.org/')
     browser.quit()

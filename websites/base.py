@@ -20,6 +20,7 @@ def get_js(name):
 class Script:
 
     getDataURL_js = get_js('getDataURL.js')
+    getDataURL_js2 = get_js('getDataURL2.js')
     redirect_js = get_js('redirect.js')
 
 
@@ -67,8 +68,10 @@ class Base:
     #######################
     def download(self):
         if self.page_url:
+            self.browser.get(self.page_url)
             self._download_episode()
         elif self.menu_url:
+            self.browser.get(self.menu_url)
             self._set_episodes()
             self._download_episodes()
         else:
@@ -115,17 +118,26 @@ class Base:
     #######################
     def _get_image_name(self):
         image = self.browser.find_elements_by_css_selector(self.image)
+        if len(image) == 0:
+            self.LOGGER.error("Don't find image by selector: %s" % self.image)
+            return False
         image = image[0]
-        name = image.get_attribute('href').split('/')[-1]
+        name = image.get_attribute('src').split('/')[-1]
         return name
 
     def _get_data_url(self):
-        data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % Script.getDataURL_js, self.image)
-        if not data_base64:
-            self.LOGGER.error("Don't get data url")
-            return False
-        self.LOGGER.debug('Get data URL %s ...' % data_base64[:50])
-        return data_base64[22:]
+        data_base64 = ''
+        try:
+            data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % Script.getDataURL_js, self.image)
+            self.LOGGER.debug('Get data URL %s ...' % data_base64[:10])
+        except:
+            self.LOGGER.error("Don't get data url by getDataURL_js")
+        try:
+            data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % Script.getDataURL_js2, self.image)
+            self.LOGGER.debug('Get data URL %s ...' % data_base64[:10])
+        except:
+            self.LOGGER.error("Don't get data url by getDataURL_js2")
+        return data_base64
 
     def _save_as_file(self, data_base64, path):
         data = base64.b64decode(data_base64.encode('ascii'))
