@@ -1,4 +1,12 @@
 #######################
+#       Logger        #
+#######################
+import logging, logging.config
+logging.config.fileConfig("logger.conf")
+LOGGER = logging.getLogger("dev")
+
+
+#######################
 #       Browser       #
 #######################
 import os
@@ -13,12 +21,16 @@ BROWSER = 'phantomjs'
 
 def get_browser(browser=BROWSER):
     if browser == 'phantomjs':
+        LOGGER.info('Get browser Phantomjs')
         return webdriver.PhantomJS(executable_path=PHANTOMJS_PATH, service_args=['--web-security=false'])
     elif browser == 'chrome':
+        LOGGER.info('Get browser Chrome')
         return webdriver.Chrome(executable_path=CHROME_PATH)
     elif browser == 'firefox':
+        LOGGER.info('Get browser Firefox')
         return webdriver.Firefox(executable_path=FIREFOX_PATH)
     elif browser == 'ie':
+        LOGGER.info('Get browser IE')
         return webdriver.Ie(executable_path=IE_PATH)
     else:
         LOGGER.error('Invalid or unsupported browser name')

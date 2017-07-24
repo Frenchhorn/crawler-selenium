@@ -95,8 +95,11 @@ class Base:
 
     # for test
     def download_page(self, page_url):
+        self.LOGGER.info('Enter page %s' % page_url)
         self.browser.get(page_url)
+        self.LOGGER.info('Get data')
         data = self._get_data_url()
+        self.LOGGER.info('Save data')
         self._save_as_file(data, 'test.png')
 
 
@@ -130,14 +133,15 @@ class Base:
         try:
             data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % Script.getDataURL_js, self.image)
             self.LOGGER.debug('Get data URL %s ...' % data_base64[:10])
+            return data_base64
         except:
             self.LOGGER.error("Don't get data url by getDataURL_js")
         try:
             data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % Script.getDataURL_js2, self.image)
             self.LOGGER.debug('Get data URL %s ...' % data_base64[:10])
+            return data_base64
         except:
             self.LOGGER.error("Don't get data url by getDataURL_js2")
-        return data_base64
 
     def _save_as_file(self, data_base64, path):
         data = base64.b64decode(data_base64.encode('ascii'))

@@ -12,8 +12,13 @@ def download(url):
 
 
 if __name__ == '__main__':
+    utils.LOGGER.info('Get website object')
     website_object = utils.get_website_object('http://phantomjs.org/')
     browser = utils.get_browser()
+    utils.LOGGER.info('Set browser')
     website_object.set_browser(browser)
+    utils.LOGGER.info('Download page')
     website_object.download_page('http://phantomjs.org/')
+    utils.LOGGER.info('Finish')
     browser.quit()
+    utils.LOGGER.info('Quit')
