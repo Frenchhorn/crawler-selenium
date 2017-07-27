@@ -3,7 +3,13 @@ import utils
 
 SAVE_FOLDER = 'download'
 
-def download(url):
+def download(url, folder=SAVE_FOLDER):
+    """Download the pictures to appointed folder.
+
+    :param url:
+    :param folder: (optional)
+    """
+
     website_object = utils.get_website_object(url)
     assert website_object, "Don't match"
     browser = utils.get_browser()

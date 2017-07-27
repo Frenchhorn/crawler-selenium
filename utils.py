@@ -20,6 +20,12 @@ IE_PATH = os.path.join('.', 'driver', 'IEDriverServer.exe')
 BROWSER = 'phantomjs'
 
 def get_browser(browser=BROWSER):
+    """Get the webdriver.
+
+    :param browser: (optional) Browser name
+    :return: Instance of relevant webdriver.
+    """
+
     if browser == 'phantomjs':
         LOGGER.info('Get browser Phantomjs')
         return webdriver.PhantomJS(executable_path=PHANTOMJS_PATH, service_args=['--web-security=false'])
@@ -40,12 +46,17 @@ def get_browser(browser=BROWSER):
 #     Filter URL      #
 #######################
 import websites
-websites_class = [websites.__dict__[i] for i in websites.__all__]
+WEBSITES_CLASS = [websites.__dict__[i] for i in websites.__all__]
 
 def get_website_object(url):
-    for i in websites_class:
-        if i.menu.match(url):
-            return i(menu_url=url)
-        elif i.page.match(url):
-            return i(page_url=url)
-    return None
+    """Get suitable website instance.
+
+    :param url: the full path of website, should be the menu page or view page.
+    :return: Instance of class in module websites.
+    """
+
+    for Website in WEBSITES_CLASS:
+        if Website.menu.match(url):
+            return Website(menu_url=url)
+        elif Website.page.match(url):
+            return Website(page_url=url)
