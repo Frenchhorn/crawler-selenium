@@ -1,14 +1,9 @@
 import os
 import base64
-import logging, logging.config
 
 
 CUR_DIR = os.path.dirname(__file__)
 
-#######################
-#       Config        #
-#######################
-logging.config.fileConfig(os.path.join(CUR_DIR, '..',"logger.conf"))
 
 #######################
 #       Scripts       #
@@ -25,8 +20,6 @@ class Script:
 
 
 class Base:
-    # Logger
-    LOGGER = logging.getLogger("dev")
 
     # collect menu episode urls
     episodes = []
@@ -56,6 +49,9 @@ class Base:
     #######################
     def set_browser(self, browser):
         self.browser = browser
+
+    def set_logger(self, logger):
+        self.LOGGER = logger
 
     def _set_episodes(self):
         elements = self.browser.find_elements_by_css_selector(self.episode)
@@ -94,13 +90,15 @@ class Base:
         self._save_as_file(data, name)
 
     # for test
-    def download_page(self, page_url):
+    def test(self):
+        page_url = self.page_url
         self.LOGGER.info('Enter page %s' % page_url)
         self.browser.get(page_url)
         self.LOGGER.info('Get data')
         data = self._get_data_url()
         self.LOGGER.info('Save data')
         self._save_as_file(data, 'test.png')
+        self.browser.quit()
 
 
     #######################
