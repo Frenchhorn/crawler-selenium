@@ -8,19 +8,19 @@
     <tr>
         <td>chromedriver.exe</td>
         <td>Chrome</td>
-        <td>http://npm.taobao.org/mirrors/chromedriver/</td>
+        <td>http://chromedriver.storage.googleapis.com/index.html (http://npm.taobao.org/mirrors/chromedriver/)</td>
         <td></td>
     </tr>
     <tr>
         <td>geckodriver.exe</td>
         <td>»ðºü</td>
-        <td></td>
+        <td>https://github.com/mozilla/geckodriver/releases</td>
         <td></td>
     </tr>
     <tr>
         <td>IEDriverServer.exe</td>
         <td>IE</td>
-        <td></td>
+        <td>http://selenium-release.storage.googleapis.com/index.html</td>
         <td></td>
     </tr>
     <tr>
