@@ -2,14 +2,11 @@ import os
 import base64
 
 
-CUR_DIR = os.path.dirname(__file__)
-
-
 #######################
 #       Scripts       #
 #######################
 def get_js(name):
-    with open(os.path.join(CUR_DIR, '..', 'js', name), 'rb') as f:
+    with open(os.path.join(os.path.dirname(__file__), '..', 'js', name), 'rb') as f:
         return f.read().decode('utf-8')
 
 class Script:
@@ -152,4 +149,4 @@ class Base:
     #      Redirect       #
     #######################
     def redirect(self, url):
-        self.browser.execute_script('(%s)(arguments[0]' % Script.redirect_js, url)
+        self.browser.execute_script('(%s)(arguments[0])' % Script.redirect_js, url)

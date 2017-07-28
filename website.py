@@ -4,9 +4,6 @@ import websites
 from selenium.webdriver import PhantomJS, Chrome, Firefox, Ie
 
 
-logging.config.fileConfig("logger.conf")
-
-
 class Website:
     """Manage the class in websites and the whole flow.
     """
@@ -20,6 +17,7 @@ class Website:
         'ie' : (Ie ,os.path.join(CUR_DIR, 'driver', 'IEDriverServer.exe'))
     }
     WEBSITES_CLASS = [websites.__dict__[i] for i in websites.__all__]
+    logging.config.fileConfig("logger.conf")
     LOGGER = logging.getLogger("dev")
 
 
