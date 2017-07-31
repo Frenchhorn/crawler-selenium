@@ -1,5 +1,9 @@
+"""
+Main class
+"""
 import os
-import logging, logging.config
+import logging
+import logging.config
 import websites
 from selenium.webdriver import PhantomJS, Chrome, Firefox, Ie
 
@@ -11,10 +15,10 @@ class Website:
     CUR_DIR = os.path.dirname(__file__)
     BROWSER = 'phantomjs'
     BROWSER_DRIVER = {
-        'phantomjs' : (PhantomJS ,os.path.join(CUR_DIR, 'driver', 'phantomjs.exe')),
-        'chrome' : (Chrome ,os.path.join(CUR_DIR, 'driver', 'chromedriver.exe')),
-        'firefox' : (Firefox ,os.path.join(CUR_DIR, 'driver', 'geckodriver.exe')),
-        'ie' : (Ie ,os.path.join(CUR_DIR, 'driver', 'IEDriverServer.exe'))
+        'phantomjs' : (PhantomJS, os.path.join(CUR_DIR, 'driver', 'phantomjs.exe')),
+        'chrome' : (Chrome, os.path.join(CUR_DIR, 'driver', 'chromedriver.exe')),
+        'firefox' : (Firefox, os.path.join(CUR_DIR, 'driver', 'geckodriver.exe')),
+        'ie' : (Ie, os.path.join(CUR_DIR, 'driver', 'IEDriverServer.exe'))
     }
     WEBSITES_CLASS = [websites.__dict__[i] for i in websites.__all__]
     logging.config.fileConfig("logger.conf")
@@ -36,7 +40,7 @@ class Website:
                 self.LOGGER.info('Using class %s' % Class.__name__)
                 break
             elif Class.page.match(url):
-                self.object =  Class(page_url=url)
+                self.object = Class(page_url=url)
                 self.LOGGER.info('Using class %s' % Class.__name__)
                 break
         else:

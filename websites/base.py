@@ -6,8 +6,8 @@ import base64
 #       Scripts       #
 #######################
 def get_js(name):
-    with open(os.path.join(os.path.dirname(__file__), '..', 'js', name), 'rb') as f:
-        return f.read().decode('utf-8')
+    with open(os.path.join(os.path.dirname(__file__), '..', 'js', name), 'rb') as file:
+        return file.read().decode('utf-8')
 
 class Script:
 
@@ -53,7 +53,7 @@ class Base:
     def _set_episodes(self):
         elements = self.browser.find_elements_by_css_selector(self.episode)
         for i in elements:
-            self.episodes.append((i.get_attribute('text'),i.get_attribute('href')))
+            self.episodes.append((i.get_attribute('text'), i.get_attribute('href')))
 
 
     #######################
@@ -102,8 +102,8 @@ class Base:
     #       Action        #
     #######################
     def _next_page(self):
-        next_page_button = self.find_elements_by_css_selector(self.next_page)
-        if len(next_page_button) == 0:
+        next_page_button = self.browser.find_elements_by_css_selector(self.next_page)
+        if not next_page_button:
             return False
         next_page_button = next_page_button[0]
         if next_page_button.is_displayed():
@@ -116,7 +116,7 @@ class Base:
     #######################
     def _get_image_name(self):
         image = self.browser.find_elements_by_css_selector(self.image)
-        if len(image) == 0:
+        if not image:
             self.LOGGER.error("Don't find image by selector: %s" % self.image)
             return False
         image = image[0]
@@ -140,8 +140,8 @@ class Base:
 
     def _save_as_file(self, data_base64, path):
         data = base64.b64decode(data_base64.encode('ascii'))
-        with open(path, 'wb') as f:
-            f.write(data)
+        with open(path, 'wb') as file:
+            file.write(data)
         self.LOGGER.info('Save image as %s' % path)
 
 
