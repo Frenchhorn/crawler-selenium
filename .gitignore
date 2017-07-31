@@ -105,3 +105,4 @@ chromedriver.exe
 geckodriver.exe
 IEDriverServer.exe
 phantomjs.exe
+.vscode/launch.json
