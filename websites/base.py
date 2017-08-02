@@ -11,8 +11,8 @@ def get_js(name):
 
 class Script:
 
+    getImage_js = get_js('getImage.js')
     getDataURL_js = get_js('getDataURL.js')
-    getDataURL_js2 = get_js('getDataURL2.js')
     redirect_js = get_js('redirect.js')
 
 
@@ -21,7 +21,7 @@ class Base:
     # collect menu episode urls
     episodes = []
 
-    # Below attribute should be override
+    # Below attribute should be overrided
     # Match
     menu = None         # URL pattern
     page = None         # URL pattern
@@ -114,6 +114,21 @@ class Base:
     #######################
     #     Save Image      #
     #######################
+    def save_image(self):
+        data_base64 = ''
+        try:
+            data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % Script.getImage_js, self.image)
+            self.LOGGER.debug('Get data URL %s ...' % data_base64[:10])
+        except:
+            pass
+        if not data_base64:
+            return False
+        data = base64.b64decode(data_base64.encode('ascii'))
+        with open('test.png', 'wb') as file:
+            file.write(data)
+        self.LOGGER.info('Save image as test.png')
+        return True
+
     def _get_image_name(self):
         image = self.browser.find_elements_by_css_selector(self.image)
         if not image:
@@ -126,17 +141,16 @@ class Base:
     def _get_data_url(self):
         data_base64 = ''
         try:
-            data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % Script.getDataURL_js, self.image)
-            self.LOGGER.debug('Get data URL %s ...' % data_base64[:10])
-            return data_base64
+            data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % Script.getImage_js, self.image)
+            self.LOGGER.debug('getDataURL_js: Get data URL %s ...' % data_base64[:10])
         except:
             self.LOGGER.error("Don't get data url by getDataURL_js")
         try:
-            data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % Script.getDataURL_js2, self.image)
-            self.LOGGER.debug('Get data URL %s ...' % data_base64[:10])
-            return data_base64
+            data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % Script.getDataURL_js, self.image)
+            self.LOGGER.debug('getImage_js: Get data URL %s ...' % data_base64[:10])
         except:
-            self.LOGGER.error("Don't get data url by getDataURL_js2")
+            self.LOGGER.error("Don't get data url by getImage_js")
+        return data_base64
 
     def _save_as_file(self, data_base64, path):
         data = base64.b64decode(data_base64.encode('ascii'))
