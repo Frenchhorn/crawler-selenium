@@ -62,7 +62,7 @@ class Website:
 
 
     def download(self):
-        """Start download.
+        """Manage download.
         """
 
         self.object.download()
