@@ -82,12 +82,18 @@ class Base:
     def download_episodes(self):
         """Start download in menu page.
         """
-        pass
+        episodes = self.browser.find_elements_by_css_selector(self.episode)
+        for episode in episodes:
+            episode.click()
+            self.download_episode()
+            self.browser.back()
 
     def download_episode(self):
         """Start download in view page
         """
-        pass
+        self.save_image()
+        while self._next_page():
+            self.save_image()
 
 
     #######################
@@ -115,6 +121,7 @@ class Base:
         if next_page_button.is_displayed():
             next_page_button.click()
             return True
+        return False
 
 
     #######################
