@@ -27,9 +27,6 @@ class Base:
     """Basic class for other website class in same folder.
     """
 
-    # collect menu episode urls
-    episodes = []
-
     # Below attribute should be overrided
     # Match
     menu = None         # URL pattern
