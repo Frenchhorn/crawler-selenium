@@ -1,7 +1,6 @@
 """
-    Basic class for other website class in same folder
+Basic class for other website class in same folder
 """
-
 import os
 import base64
 
@@ -15,14 +14,15 @@ def get_js(name):
     with open(os.path.join(os.path.dirname(__file__), '..', 'js', name), 'rb') as file:
         return file.read().decode('utf-8')
 
-class Script:
-    """Keep the js file string.
-    """
-    getImage_js = get_js('getImage.js')
-    getDataURL_js = get_js('getDataURL.js')
-    redirect_js = get_js('redirect.js')
+JS = {
+    'getImage': get_js('getImage.js'),
+    'redirect': get_js('redirect.js')
+}
 
 
+#######################
+#        Main         #
+#######################
 class Base:
     """Basic class for other website class in same folder.
     """
@@ -129,7 +129,7 @@ class Base:
         """
         data_base64 = ''
         try:
-            data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % Script.getImage_js, self.image)
+            data_base64 = self.browser.execute_script('return (%s)(arguments[0])' % JS['getImage'], self.image)
             self.LOGGER.debug('Get data URL %s ...' % data_base64[:10])
         except:
             pass
@@ -149,4 +149,4 @@ class Base:
     def redirect(self, url):
         """Redirect the website
         """
-        self.browser.execute_script('(%s)(arguments[0])' % Script.redirect_js, url)
+        self.browser.execute_script('(%s)(arguments[0])' % JS['redirect'], url)
