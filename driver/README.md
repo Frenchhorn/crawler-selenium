@@ -1,9 +1,9 @@
 <table>
     <tr>
-        <th>Ãû³Æ</th>
-        <th>ä¯ÀÀÆ÷</th>
-        <th>Á´½Ó</th>
-        <th>±¸×¢</th>
+        <th>åç§°</th>
+        <th>æµè§ˆå™¨</th>
+        <th>é“¾æ¥</th>
+        <th>å¤‡æ³¨</th>
     </tr>
     <tr>
         <td>chromedriver.exe</td>
@@ -13,7 +13,7 @@
     </tr>
     <tr>
         <td>geckodriver.exe</td>
-        <td>»ğºü</td>
+        <td>ç«ç‹</td>
         <td>https://github.com/mozilla/geckodriver/releases</td>
         <td></td>
     </tr>
@@ -27,6 +27,6 @@
         <td>phantomjs.exe</td>
         <td>PhantomJS</td>
         <td>http://phantomjs.org/download.html</td>
-        <td>ÎŞ½çÃæä¯ÀÀÆ÷</td>
+        <td>æ— ç•Œé¢æµè§ˆå™¨</td>
     </tr>
 </table>
